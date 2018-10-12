@@ -10,8 +10,11 @@ class BoggleContainer extends Component {
         }
     }
 
+    /**
+     * Get all the letters from the board
+     */
     getDice(){
-
+        //The 16 dice in boggle
         const DICE = [
             ['R', 'I', 'F', 'O', 'B', 'X'],
             ['I', 'F', 'E', 'H', 'E', 'Y'],
@@ -39,6 +42,7 @@ class BoggleContainer extends Component {
             [shuffledDice[i], shuffledDice[j]] = [shuffledDice[j], shuffledDice[i]];
         }
         
+        //Get a letter from each dice
         let letters = [];
         for (let i = 0; i < shuffledDice.length; i++)
         {
@@ -48,6 +52,9 @@ class BoggleContainer extends Component {
         return letters
     }
 
+    /**
+     * Generate a grid for our boggle game
+     */
     generateBoggleGrid(){
         let grid = [];
         let letters = this.getDice();
@@ -68,7 +75,11 @@ class BoggleContainer extends Component {
         })
     }
 
-
+    /**
+     * Call the Ruby API to search the grid for our word
+     * 
+     * @param {*} word 
+     */
     searchWord(word)
     {
         if(word.length < 3)
@@ -77,27 +88,29 @@ class BoggleContainer extends Component {
             return
         }
 
+        //Build the request json
         let data = {}
-            data.board = []
-            data.word = word
+        data.board = []
+        data.word = word
 
-            for(let i = 0; i < this.state.boggleGrid.length; i++)
+        for(let i = 0; i < this.state.boggleGrid.length; i++)
+        {
+            data.board[i] = {};
+            let row = [];
+            for(let x = 0; x< this.state.boggleGrid.length; x++)
             {
-                data.board[i] = {};
-                let row = [];
-                for(let x = 0; x< this.state.boggleGrid.length; x++)
-                {
-                    row[x] = this.state.boggleGrid[i][x];
-                }
-                data.board[i].row = row;
+                row[x] = this.state.boggleGrid[i][x];
             }
-            axios.post('/api/v1/boggles', data)
-            .then(response => {
-                alert('World found!')
-                
-            }).catch(error => {
-                alert('Word not found!')
-            })
+            data.board[i].row = row;
+        }
+        //Send to Ruby API
+        axios.post('/api/v1/boggles', data)
+        .then(response => {
+            alert('World found!')
+            
+        }).catch(error => {
+            alert('Word not found!')
+        })
         
     }
     render() {
