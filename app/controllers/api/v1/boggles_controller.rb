@@ -51,7 +51,6 @@ class Api::V1::BogglesController < ApplicationController
     # +word_parts+:: current word being built from search
     # +board+:: +Board+ to search
     def search(word, x, y, word_parts, board)
-    
       return_val = false
       # we found the word
       if word.eql? word_parts

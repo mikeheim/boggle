@@ -106,7 +106,7 @@ class BoggleContainer extends Component {
         //Send to Ruby API
         axios.post('/api/v1/boggles', data)
         .then(response => {
-            alert('World found!')
+            alert('Word found!')
             
         }).catch(error => {
             alert('Word not found!')

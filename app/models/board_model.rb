@@ -15,7 +15,9 @@ class BoardModel
         y_range = ([coord_y-1, 0].max)..([coord_y+1, @length-1].min)
 
         curr = @board[coord_x][coord_y]
+
         #mark current node so we don't return it
+        @board[coord_x][coord_y] = nil
         for x in x_range
             for y in y_range
                 yield x, y if @board[x][y]
