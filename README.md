@@ -8,3 +8,4 @@ How to run this app!
 * ```cd client```
 * ```npm install```
 * ```npm start```
+* The last step should open a browser window with the application. Enjoy!
